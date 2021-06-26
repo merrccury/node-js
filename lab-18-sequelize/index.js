@@ -1,11 +1,11 @@
 const http = require("http");
 const fs = require("fs");
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize('ADV', 'student_fit', 'fitfit', {host: "localhost", dialect: "mssql"});
+const sequelize = new Sequelize('ADV', 'student_fit', 'fitfit', {host: "localhost", dialect: "mssql", force:true});
 const {Faculty, Pulpit, Teacher, Subject, AuditoriumType, Auditorium} = require("./models").ORM(sequelize);
 
 sequelize.authenticate().then(() => console.log("done")).catch(err => console.log(err));
-
+sequelize.sync({force: true}).then(() => console.log("async done")).catch(err => console.log(err));
 
 http.createServer((req, res) => {
     switch (req.method) {

@@ -4,16 +4,10 @@ const https = require('https')
 const fs = require('fs')
 const port = 3000
 
-/*let options =
-{
-    key: fs.readFileSync('./security_lk/RS-LAB25-HDV.key'),
-    cert: fs.readFileSync('./security_lk/RS-HDV-CRT.crt')
-};*/
-
 let options =
 {
-    key: fs.readFileSync('./security_other_way/cert.key'),
-    cert: fs.readFileSync('./security_other_way/cert.pem')
+    key: fs.readFileSync('./security_other_way/merrc.key'),
+    cert: fs.readFileSync('./security_other_way/merrc.crt')
 };
 
 app.get('/', (req, res) =>
@@ -23,5 +17,5 @@ app.get('/', (req, res) =>
 
 https.createServer(options, app).listen(port, () =>
 {
-    console.log(`https://localhost:${port}/`);
+    console.log(`https://127.0.0.1:${port}/`);
 });
