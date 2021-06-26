@@ -1,0 +1,16 @@
+1. перейти в папку Git на компьютере "C:\Program Files\Git\usr\bin" консолью от администратора где есть openssl.exe
+
+2. генерация приватного ключа Certification Authority
+openssl genrsa -des3 -out CA-LAB25-HDV.key 2048
+
+3. генерация сертификата CA
+openssl req -x509 -new -key CA-LAB25-HDV.key -days 700 -sha256 -out CA-LAB25-HDV.crt
+
+2. генерация приватного ключа Resource
+openssl genrsa -des3 -out RS-LAB25-HDV.key 2048
+
+4. генерация запроса на сертификат для ресурса
+openssl req -new -key RS-LAB25-HDV.key -out RS-HDV.csr -sha256 -config RS-LAB25-HDV.cfg
+
+5. генерация сертификата для ресурса
+openssl x509 -req -in RS-HDV.csr -CA CA-LAB25-HDV.crt -CAkey CA-LAB25-HDV.key -CAcreateserial -out RS-HDV-CRT.crt -days 365 -sha256 -extensions v3_req -extfile RS-LAB25-HDV.cfg

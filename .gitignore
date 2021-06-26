@@ -1,0 +1,17 @@
+# Project exclude paths
+/lab31_SWAGGER/lab31_SWAGGER/node_modules/
+/lab-17-redis/node_modules/
+/lab-18-sequelize/node_modules/
+/lab-19-express-mvc/node_modules/
+/lab-21-http-auth/node_modules/
+/lab-24-author-cals/node_modules/
+/lab-30-tg-bot/node_modules/
+/lr_21_HTTP_AUTH/Lab_21/node_modules/
+/lr_22_FORMS_AUTH/Lab_22/node_modules/
+/lr_23_OAUTH/Lab_23/node_modules/
+/lr_24_AUTHOR_CASL/Lab8/node_modules/
+/lr_25_HTTPS/lr_25_project/node_modules/
+/lr_26_CRYPTO/lr_26_project/node_modules/
+/lr_27_WEBDAV/lr_27_project/node_modules/
+/lr_28_JSONRPC/lr_28_project/node_modules/
+/lr_29_WASM/node_modules/

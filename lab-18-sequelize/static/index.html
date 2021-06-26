@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 18</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <style>
+        h1 {
+            horiz-align: center;
+        }
+
+        #root {
+            overflow: auto;
+            height: 300px;
+            margin: auto;
+            width: 480px;
+        }
+
+        form {
+            margin: auto;
+            width: 480px;
+        }
+    </style>
+</head>
+<body>
+<h1>Hello Sequelize</h1>
+<form action="">
+    <div class="form-group">
+        <label for="pulpit">Pulpit</label>
+        <input class="form-control" id="pulpit" placeholder="Pulpit" type="text" width="300">
+    </div>
+    <div class="form-group">
+        <label for="pulpitName">Pulpit Name</label>
+        <input class="form-control" id="pulpitName" placeholder="Pulpit Name" type="text" width="300">
+    </div>
+    <div class="form-group">
+        <label for="faculty">Faculty</label>
+        <input class="form-control" id="faculty" placeholder="Faculty" type="text" width="300">
+    </div>
+    <input type="button" onclick="getAllPulpits()" class="btn btn-primary " value="Get all pulpits">
+    <input type="button" onclick="addPulpit()" class="btn btn-success" value="Add pulpit">
+    <input type="button" onclick="updatePulpit()" class="btn btn-warning" value="Update pulpit">
+    <input type="button" onclick="deletePulpit()" class="btn btn-danger" value="Delete pulpit">
+</form>
+<br><br>
+<div id="root"></div>
+<script>
+    let getAllPulpits = async () => {
+        let response = await fetch('http://localhost:18018/api/pulpits')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                $("#root").empty();
+                {
+                    let table = "<table class=\"table\">\n" +
+                        "  <thead>\n" +
+                        "    <tr>\n" +
+                        "      <th scope=\"col\">#</th>\n" +
+                        "      <th scope=\"col\">Pulpit</th>\n" +
+                        "      <th scope=\"col\">Pulpit name</th>\n" +
+                        "      <th scope=\"col\">Faculty</th>\n" +
+                        "    </tr>\n" +
+                        "  </thead>\n" +
+                        "  <tbody id=\"tableBody\">\n" +
+                        "  </tbody>\n" +
+                        "</table>"
+                    $("#root").append(table);
+                }
+                let i = 0;
+                data.map(item => {
+                    $("#tableBody").append(`<tr>
+                            <th scope="row">${++i}</th>
+                            <td>${item.PULPIT}</td>
+                            <td>${item.PULPIT_NAME}</td>
+                            <td>${item.FACULTY}</td>
+                        </tr>`);
+                })
+            });
+    }
+    let addPulpit = async () => {
+        let pulpit =
+            {
+                PULPIT: $('#pulpit').val(),
+                PULPIT_NAME: $('#pulpitName').val(),
+                FACULTY: $('#faculty').val()
+            }
+
+        console.log(pulpit);
+        $("#root").empty();
+        let response = await fetch('http://localhost:18018/api/pulpits', {
+            body: JSON.stringify(pulpit),
+            method: "POST"
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                {
+                    let table = "<table class=\"table\">\n" +
+                        "  <thead>\n" +
+                        "    <tr>\n" +
+                        "      <th scope=\"col\">#</th>\n" +
+                        "      <th scope=\"col\">Pulpit</th>\n" +
+                        "      <th scope=\"col\">Pulpit name</th>\n" +
+                        "      <th scope=\"col\">Faculty</th>\n" +
+                        "    </tr>\n" +
+                        "  </thead>\n" +
+                        "  <tbody id=\"tableBody\">\n" +
+                        "  </tbody>\n" +
+                        "</table>"
+                    $("#root").append(table);
+                }
+                let i = 0;
+                if(data.PULPIT === undefined){
+                    $("#root").append(JSON.stringify(data))
+                }
+                else {
+                    $("#tableBody").append(`<tr>
+                            <th scope="row">${++i}</th>
+                            <td>${data.PULPIT}</td>
+                            <td>${data.PULPIT_NAME}</td>
+                            <td>${data.FACULTY}</td>
+                        </tr>`)
+                }
+            });
+    }
+    let updatePulpit = async () => {
+        let pulpit =
+            {
+                PULPIT: $('#pulpit').val(),
+                PULPIT_NAME: $('#pulpitName').val(),
+                FACULTY: $('#faculty').val()
+            }
+
+        console.log(pulpit);
+        $("#root").empty();
+        let response = await fetch('http://localhost:18018/api/pulpits', {
+            body: JSON.stringify(pulpit),
+            method: "PUT"
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                {
+                    let table = "<table class=\"table\">\n" +
+                        "  <thead>\n" +
+                        "    <tr>\n" +
+                        "      <th scope=\"col\">#</th>\n" +
+                        "      <th scope=\"col\">Pulpit</th>\n" +
+                        "      <th scope=\"col\">Pulpit name</th>\n" +
+                        "      <th scope=\"col\">Faculty</th>\n" +
+                        "    </tr>\n" +
+                        "  </thead>\n" +
+                        "  <tbody id=\"tableBody\">\n" +
+                        "  </tbody>\n" +
+                        "</table>"
+                    $("#root").append(table);
+                }
+                let i = 0;
+                if(data.PULPIT !== undefined){
+                    $("#root").append(JSON.stringify(data))
+                }
+                else {
+                    data.map(item => {
+                        $("#tableBody").append(`<tr>
+                            <th scope="row">${++i}</th>
+                            <td>${item.PULPIT}</td>
+                            <td>${item.PULPIT_NAME}</td>
+                            <td>${item.FACULTY}</td>
+                        </tr>`);
+                    })
+                }
+            });
+    }
+    let deletePulpit = async () => {
+        let pulpit =
+            {
+                PULPIT: $('#pulpit').val(),
+                PULPIT_NAME: $('#pulpitName').val(),
+                FACULTY: $('#faculty').val()
+            }
+
+        console.log(pulpit);
+        $("#root").empty();
+        let response = await fetch('http://localhost:18018/api/pulpits/'+ pulpit.PULPIT, {
+            //body: JSON.stringify(pulpit),
+            method: "DELETE"
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                {
+                    let table = "<table class=\"table\">\n" +
+                        "  <thead>\n" +
+                        "    <tr>\n" +
+                        "      <th scope=\"col\">#</th>\n" +
+                        "      <th scope=\"col\">Pulpit</th>\n" +
+                        "      <th scope=\"col\">Pulpit name</th>\n" +
+                        "      <th scope=\"col\">Faculty</th>\n" +
+                        "    </tr>\n" +
+                        "  </thead>\n" +
+                        "  <tbody id=\"tableBody\">\n" +
+                        "  </tbody>\n" +
+                        "</table>"
+                    $("#root").append(table);
+                }
+                let i = 0;
+                if(data.PULPIT !== undefined){
+                    $("#root").append(JSON.stringify(data))
+                }
+                else {
+                    data.map(item => {
+                        $("#tableBody").append(`<tr>
+                            <th scope="row">${++i}</th>
+                            <td>${item.PULPIT}</td>
+                            <td>${item.PULPIT_NAME}</td>
+                            <td>${item.FACULTY}</td>
+                        </tr>`);
+                    })
+                }
+            });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "lab-30-tg-bot",
+  "version": "1.0.0",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.53.0"
+  }
+}
